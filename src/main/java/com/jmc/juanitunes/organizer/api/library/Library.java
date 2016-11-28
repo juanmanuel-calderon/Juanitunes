@@ -7,7 +7,7 @@ public interface Library {
 	
 	public Library addAlbumArtist(AlbumArtist albumArtist);
 	public Library removeAlbumArtist(AlbumArtist albumArtist);	
-	public Library sort(Comparator<AlbumArtist>... criterion);
+	public Library sort(Comparator<AlbumArtist>... criteria);
 	public Library merge(Library other);
 	
 	public Set<AlbumArtist> getAlbumArtists();

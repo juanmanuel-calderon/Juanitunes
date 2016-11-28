@@ -42,9 +42,9 @@ public class SimpleLibrary implements Library {
 		return this;
 	}
 	
-	public Library sort(Comparator<AlbumArtist>... criterion) {
+	public Library sort(Comparator<AlbumArtist>... criteria) {
 		
-		Set<AlbumArtist> sortedAlbumArtists = new TreeSet<AlbumArtist>(Utils.generateFinalComparator(criterion));
+		Set<AlbumArtist> sortedAlbumArtists = new TreeSet<AlbumArtist>(Utils.generateFinalComparator(criteria));
 		sortedAlbumArtists.addAll(albumArtists);
 		albumArtists = sortedAlbumArtists;
 		return this;

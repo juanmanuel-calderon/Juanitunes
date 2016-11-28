@@ -39,9 +39,9 @@ public class MultiCDAlbum implements Album {
 		return this;
 	}
 
-	public Album sort(Comparator<Song>... criterion) {
+	public Album sort(Comparator<Song>... criteria) {
 		albums.stream()
-			  .forEach(a -> a.sort(criterion));
+			  .forEach(a -> a.sort(criteria));
 		return this;
 	}
 	

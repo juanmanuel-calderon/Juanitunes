@@ -25,8 +25,8 @@ public class Utils {
 		}
 	}
 	
-	public static <U> Comparator<U> generateFinalComparator(Comparator<U>... criterion) {
+	public static <U> Comparator<U> generateFinalComparator(Comparator<U>... criteria) {
 		Comparator<U> initial = (s1, s2) -> 0;
-		return Stream.of(criterion).reduce(initial, (c1, c2) -> c1.thenComparing(c2));
+		return Stream.of(criteria).reduce(initial, (c1, c2) -> c1.thenComparing(c2));
 	}
 }

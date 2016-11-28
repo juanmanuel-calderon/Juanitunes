@@ -55,9 +55,9 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
 		return this;
 	}
 
-	public AlbumArtist sort(Comparator<Album>... criterion) {
+	public AlbumArtist sort(Comparator<Album>... criteria) {
 		
-		Set<Album> sortedAlbums = new TreeSet<Album>(Utils.generateFinalComparator(criterion));
+		Set<Album> sortedAlbums = new TreeSet<Album>(Utils.generateFinalComparator(criteria));
 		sortedAlbums.addAll(albums);
 		albums = sortedAlbums;
 		return this;

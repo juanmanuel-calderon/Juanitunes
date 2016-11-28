@@ -9,7 +9,7 @@ public interface AlbumArtist {
 	public AlbumArtist addAlbum(Album album);
 	public AlbumArtist removeAlbum(Album album);
 	
-	public AlbumArtist sort(Comparator<Album>... criterion);
+	public AlbumArtist sort(Comparator<Album>... criteria);
 	public AlbumArtist merge(AlbumArtist other);
 	public Optional<AlbumArtist> match(String string);
 	

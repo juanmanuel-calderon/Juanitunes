@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import com.jmc.juanitunes.organizer.Utils;
 import com.jmc.juanitunes.organizer.api.library.Song;
 
-public class SimpleSong implements Song {
+public class SimpleSong implements Song, Comparable<Song> {
 	
 	private final String  	filename;
 	private final String  	title;
@@ -185,5 +185,10 @@ public class SimpleSong implements Song {
 		if(!otherSong.getFilename().equals(filename)) return false;
 		
 		return true;			
+	}
+
+	@Override
+	public int compareTo(Song other) {
+		return filename.compareTo(other.getFilename());
 	}
 }

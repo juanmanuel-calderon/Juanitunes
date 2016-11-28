@@ -11,7 +11,7 @@ import com.jmc.juanitunes.organizer.Utils;
 import com.jmc.juanitunes.organizer.api.library.Album;
 import com.jmc.juanitunes.organizer.api.library.Song;
 
-public class SimpleAlbum implements Album {
+public class SimpleAlbum implements Album, Comparable<Album> {
 	
 	private final String	name;
 	private final String	year;
@@ -141,5 +141,9 @@ public class SimpleAlbum implements Album {
 		if(!otherAlbum.getCatalogNumber().equals(catalogNumber)) return false;
 		
 		return true;			
+	}
+
+	public int compareTo(Album other) {
+		return catalogNumber.compareTo(other.getCatalogNumber());
 	}
 }

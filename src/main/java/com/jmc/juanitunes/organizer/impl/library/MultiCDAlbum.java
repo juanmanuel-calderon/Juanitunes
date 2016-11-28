@@ -24,16 +24,18 @@ public class MultiCDAlbum implements Album {
 	public Album addSong(Song song) {
 		albums.stream()
 			  .filter(a -> a.getName().equals(song.getCatalogNumber()))
-			  .limit(1)
-			  .forEach(a -> a.addSong(song));
+			  .findFirst()
+			  .get()
+			  .addSong(song);
 		return this;
 	}
 
 	public Album removeSong(Song song) {
 		albums.stream()
 			  .filter(a -> a.getName().equals(song.getCatalogNumber()))
-			  .limit(1)
-			  .forEach(a -> a.removeSong(song));
+			  .findFirst()
+			  .get()
+			  .removeSong(song);
 		return this;
 	}
 

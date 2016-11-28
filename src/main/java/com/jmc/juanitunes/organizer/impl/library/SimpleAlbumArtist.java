@@ -12,7 +12,7 @@ import com.jmc.juanitunes.organizer.api.library.Album;
 import com.jmc.juanitunes.organizer.api.library.AlbumArtist;
 import com.jmc.juanitunes.organizer.api.library.Song;
 
-public class SimpleAlbumArtist implements AlbumArtist {
+public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
 
 	private final String 	name;
 	private int			duration;
@@ -145,6 +145,11 @@ public class SimpleAlbumArtist implements AlbumArtist {
 		if(!otherAlbumArtist.getName().equals(name)) return false;
 		
 		return true;			
+	}
+
+	@Override
+	public int compareTo(AlbumArtist other) {
+		return name.compareTo(other.getName());
 	}
 
 }

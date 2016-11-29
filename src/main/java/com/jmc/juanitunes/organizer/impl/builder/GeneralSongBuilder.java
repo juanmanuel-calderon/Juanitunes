@@ -13,8 +13,8 @@ public class GeneralSongBuilder implements SongBuilder {
         
         String ext = Utils.getFileExtension(new File(source)).toLowerCase();
         switch(ext) {
-            case "flac"     :     return new FlacSongBuilder().createNew(source);
-            default         :     return Optional.empty(); 
+            case "flac"    	:     return new FlacSongBuilder().createNew(source);
+            default        	:     return Optional.empty(); 
         }
     }
 }

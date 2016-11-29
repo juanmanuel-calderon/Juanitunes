@@ -24,7 +24,7 @@ public class AlbumArtistBuilder implements ComponentBuilder<AlbumArtist> {
         Map<List<String>, Set<Song>> groupedSongs =
                 songs.stream()
                      .collect(Collectors.groupingBy(Song::getAlbumArtists,
-                                                     Collectors.mapping(Function.identity(), Collectors.toSet())));
+                                                    Collectors.mapping(Function.identity(), Collectors.toSet())));
         
         Map<String, Set<Song>> unfoldedAlbumArtists = new HashMap<String, Set<Song>>();
         groupedSongs.entrySet().stream()
@@ -48,9 +48,9 @@ public class AlbumArtistBuilder implements ComponentBuilder<AlbumArtist> {
     }
     
     private AlbumArtist createAlbumArtist(Entry<String, Set<Song>> songsByAlbumArtist, Set<Album> albums) {
-        Set<Album> filteredAlbums = albums.stream()
-                                          .filter(a -> a.getSongs().iterator().next().getAlbumArtists().contains(songsByAlbumArtist.getKey()))
-                                          .collect(Collectors.toSet());
+        Set<Album> filteredAlbums = albums	.stream()
+                                          	.filter(a -> a.getSongs().iterator().next().getAlbumArtists().contains(songsByAlbumArtist.getKey()))
+                                          	.collect(Collectors.toSet());
         
         return new SimpleAlbumArtist(songsByAlbumArtist.getKey(), filteredAlbums);            
     }

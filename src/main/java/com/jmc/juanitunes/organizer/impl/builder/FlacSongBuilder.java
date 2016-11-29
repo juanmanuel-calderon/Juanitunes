@@ -44,14 +44,14 @@ public class FlacSongBuilder implements SongBuilder {
             String album = tag.getFirst(FieldKey.ALBUM);
             
             List<String> artists = new ArrayList<String>();
-            tag.getFields(FieldKey.ARTIST).stream()
-                                              .map(t -> t.toString())
-                                              .forEach(t -> artists.add(t));
+            tag.getFields(FieldKey.ARTIST)	.stream()
+                                           	.map(t -> t.toString())
+                                           	.forEach(t -> artists.add(t));
             
             List<String> albumArtists = new ArrayList<String>();
-            tag.getFields(FieldKey.ALBUM_ARTIST).stream()
-                                              .map(t -> t.toString())
-                                              .forEach(t -> albumArtists.add(t));
+            tag.getFields(FieldKey.ALBUM_ARTIST)	.stream()
+                                              	  	.map(t -> t.toString())
+                                              	  	.forEach(t -> albumArtists.add(t));
             
             Song flacSong = new SimpleSong(    source,
                                                 title,

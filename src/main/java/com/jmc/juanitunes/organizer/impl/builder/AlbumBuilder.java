@@ -20,11 +20,11 @@ public class AlbumBuilder implements ComponentBuilder<Album> {
         Map<String, Set<Song>> groupedSongs =
                 songs.stream()
                      .collect(Collectors.groupingBy(Song::getCatalogNumber,
-                                                     Collectors.mapping(Function.identity(), Collectors.toSet())));
+                                                    Collectors.mapping(Function.identity(), Collectors.toSet())));
         
         albums = groupedSongs.entrySet().stream()
-                                         .map(e -> createAlbum(e))
-                                         .collect(Collectors.toSet());
+                                        .map(e -> createAlbum(e))
+                                        .collect(Collectors.toSet());
         
         return albums;
     }

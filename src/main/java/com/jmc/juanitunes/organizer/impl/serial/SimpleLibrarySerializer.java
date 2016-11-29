@@ -16,9 +16,9 @@ public class SimpleLibrarySerializer implements LibrarySerializer {
 
     public String serialize(Library s) {
         StringBuilder str = new StringBuilder("");
-        str.append("<library>")            .append(System.lineSeparator());
-        s.getAllSongs().forEach(song -> str.append(new SimpleSongSerializer().serialize(song)));
-        str.append("</library>")        .append(System.lineSeparator());        
+        str.append("<library>")         	.append(System.lineSeparator());
+        s.getAllSongs().forEach(song -> str	.append(new SimpleSongSerializer().serialize(song)));
+        str.append("</library>")           	.append(System.lineSeparator());        
         return str.toString();    
     }
 
@@ -34,6 +34,7 @@ public class SimpleLibrarySerializer implements LibrarySerializer {
     private Set<Song> deserializeSongs(String source) {
         Set<Song> songs = new TreeSet<Song>();
         SimpleSongSerializer songSerializer = new SimpleSongSerializer();
+        
         String regex = Pattern.quote("<simplesong>") + "(?s)(.*?)" + Pattern.quote("</simplesong>");
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(source);

@@ -11,25 +11,25 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleSong implements Song, Comparable<Song> {
     
-    private final String      filename;
-    private final String      title;
+    private final String      	filename;
+    private final String      	title;
     private final int         cdNumber;
     private final int         trackNumber;
-    private final String      genre;
+    private final String      	genre;
     private final int         rating;
     private final int         duration;
-    private final double     size;
+    private final double     	size;
     private final int         bitrate;
-    private final String      extension;
-    private final String    year;
-    private final String     catalogNumber;
+    private final String      	extension;
+    private final String    	year;
+    private final String    	catalogNumber;
     
-    private final List<String> albumArtists     = new ArrayList<String>();
-    private final String     album;
-    private final List<String> artists         = new ArrayList<String>();
+    private final List<String>	albumArtists   	= new ArrayList<String>();
+    private final String     	album;
+    private final List<String>	artists			= new ArrayList<String>();
     
     public SimpleSong(    String filename,
-                              String title,
+                            String title,
                             int cdNumber,
                             int trackNumber,
                             String genre,
@@ -62,7 +62,7 @@ public class SimpleSong implements Song, Comparable<Song> {
     }
     
     public SimpleSong(Song song) {
-        this(    song.getFilename(),
+        this(  	song.getFilename(),
                 song.getTitle(),
                 song.getCDNumber(),
                 song.getTrackNumber(),

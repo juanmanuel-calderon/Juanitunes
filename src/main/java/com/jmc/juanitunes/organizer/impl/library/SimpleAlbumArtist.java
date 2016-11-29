@@ -14,13 +14,13 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
 
-    private final String     name;
-    private int            duration;
-    private double            size;
+    private final String 	name;
+    private int           	duration;
+    private double       	size;
 
     private Set<Album> albums = new TreeSet<Album>();
 
-    public SimpleAlbumArtist(    String name,
+    public SimpleAlbumArtist(	String name,
                                 Set<Album> albums) {
         this.name = name;
         this.duration = 0;
@@ -29,7 +29,7 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
     }
     
     public SimpleAlbumArtist(AlbumArtist albumArtist, boolean copyAlbums) {
-        this(    albumArtist.getName(),
+        this(	albumArtist.getName(),
                 copyAlbums ? albumArtist.getAlbums() : new TreeSet<Album>());
     }
     
@@ -91,8 +91,8 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
               .filter(album -> album.match(string).isPresent())
               .forEach(filteredAlbumArtist::addAlbum);
 
-        return filteredAlbumArtist.getAlbums().isEmpty() ? Optional.empty()
-                                                          : Optional.of(filteredAlbumArtist);
+        return filteredAlbumArtist.getAlbums().isEmpty() 	? Optional.empty()
+                                                         	: Optional.of(filteredAlbumArtist);
     }
 
     public String getName() {
@@ -128,9 +128,9 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
         albumArtistStr = albumArtistStr.append("Album Artist: " + name).append(System.lineSeparator());
         albumArtistStr = albumArtistStr.append("Albums:").append(System.lineSeparator());
         albumArtistStr.append(
-                     albums.stream()
-                          .map(Album::toString)
-                          .collect(Collectors.joining(System.lineSeparator()))
+                     albums	.stream()
+                          	.map(Album::toString)
+                          	.collect(Collectors.joining(System.lineSeparator()))
                  );
 
         return albumArtistStr.toString();

@@ -14,9 +14,9 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleLibrary implements Library {
 
-    private final String     name;
-    private int            duration;
-    private double            size;
+    private final String 	name;
+    private int           	duration;
+    private double       	size;
     
     private Set<AlbumArtist> albumArtists = new TreeSet<AlbumArtist>();
     
@@ -51,10 +51,10 @@ public class SimpleLibrary implements Library {
     }
     
     public Library merge(Library other) {
-        other.getAlbumArtists().stream()
-                                .filter(aa -> !albumArtists.contains(aa))
+        other.getAlbumArtists()	.stream()
+                               	.filter(aa -> !albumArtists.contains(aa))
                                 .forEach(aa -> addAlbumArtist(aa));
-        other.getAlbumArtists().stream()
+        other.getAlbumArtists()	.stream()
                                 .filter(aa -> !albumArtists.contains(aa))
                                 .forEach(aa -> lookup(aa).merge(aa));
          
@@ -62,10 +62,10 @@ public class SimpleLibrary implements Library {
     }
     
     private AlbumArtist lookup(AlbumArtist albumArtist) {
-        return albumArtists.stream()
-                              .filter(aa -> aa.equals(albumArtist))
-                              .findFirst()
-                              .get();
+        return albumArtists	.stream()
+                           	.filter(aa -> aa.equals(albumArtist))
+                            .findFirst()
+                            .get();
     }
     
     public String getName() {
@@ -97,9 +97,9 @@ public class SimpleLibrary implements Library {
     public Set<Song> getAllSongs() {
         Set<Song> allSongs = 
                 albumArtists.stream()
-                              .map(AlbumArtist::getAllSongs)
-                              .flatMap(Set::stream)
-                              .collect(Collectors.toSet());
+                           	.map(AlbumArtist::getAllSongs)
+                            .flatMap(Set::stream)
+                            .collect(Collectors.toSet());
         
         return Collections.unmodifiableSet(allSongs);
     }
@@ -110,10 +110,9 @@ public class SimpleLibrary implements Library {
         
         albumArtistStr = albumArtistStr.append("Library: " + name).append(System.lineSeparator());
         albumArtistStr = albumArtistStr.append("Albums Artists:").append(System.lineSeparator());
-        albumArtistStr.append(
-                     albumArtists.stream()
-                                 .map(AlbumArtist::toString)
-                                 .collect(Collectors.joining(System.lineSeparator()))
+        albumArtistStr.append(albumArtists	.stream()
+                                 			.map(AlbumArtist::toString)
+                                 			.collect(Collectors.joining(System.lineSeparator()))
                  );
 
         return albumArtistStr.toString();

@@ -15,8 +15,8 @@ public class MultiCDAlbum implements Album {
     private final String name;
     private Set<Album> albums = new HashSet<Album>();
     
-    public MultiCDAlbum(    String name,
-                            Set<Album> albums) {
+    public MultiCDAlbum(	String name,
+                          	Set<Album> albums) {
         this.name = name;
         this.albums.addAll(albums);
     }
@@ -72,10 +72,10 @@ public class MultiCDAlbum implements Album {
 
     public String getYear() {
         
-        List<String> years = albums.stream()
-                                   .map(Album::getYear)
-                                   .distinct()
-                                   .collect(Collectors.toList());
+        List<String> years = albums	.stream()
+                                    .map(Album::getYear)
+                                    .distinct()
+                                    .collect(Collectors.toList());
         
         return (years.size() == 1) ? years.get(0) : "-";
     }

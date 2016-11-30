@@ -14,10 +14,11 @@ public interface Album {
     public Optional<Album> match(String string);
     
     public Set<Song> getSongs();
+    
     public String getName();
     public String getYear();
     public String getCatalogNumber();
-    public int getDurationInSeconds();
+    public int    getDurationInSeconds();
     public double getSizeInMegaBytes();
 
 }

@@ -5,5 +5,5 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 public interface SongSerializer {
     
     public String serialize(Song source);
-    public Song deserialize(String source);
+    public Song   deserialize(String source);
 }

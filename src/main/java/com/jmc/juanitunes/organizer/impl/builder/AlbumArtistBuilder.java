@@ -19,7 +19,7 @@ public class AlbumArtistBuilder implements ComponentBuilder<AlbumArtist> {
 
     public Set<AlbumArtist> createNew(Set<Song> songs) {
         Set<AlbumArtist> albumArtists = new TreeSet<AlbumArtist>();
-        Set<Album> allAlbums = new AlbumBuilder().createNew(songs);
+        Set<Album>       allAlbums    = new AlbumBuilder().createNew(songs);
         
         Map<List<String>, Set<Song>> groupedSongs =
                 songs.stream()
@@ -48,9 +48,9 @@ public class AlbumArtistBuilder implements ComponentBuilder<AlbumArtist> {
     }
     
     private AlbumArtist createAlbumArtist(Entry<String, Set<Song>> songsByAlbumArtist, Set<Album> albums) {
-        Set<Album> filteredAlbums = albums	.stream()
-                                          	.filter(a -> a.getSongs().iterator().next().getAlbumArtists().contains(songsByAlbumArtist.getKey()))
-                                          	.collect(Collectors.toSet());
+        Set<Album> filteredAlbums = albums.stream()
+                                          .filter(a -> a.getSongs().iterator().next().getAlbumArtists().contains(songsByAlbumArtist.getKey()))
+                                          .collect(Collectors.toSet());
         
         return new SimpleAlbumArtist(songsByAlbumArtist.getKey(), filteredAlbums);            
     }

@@ -11,38 +11,38 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleSong implements Song, Comparable<Song> {
     
-    private final String      	filename;
-    private final String      	title;
-    private final int         cdNumber;
-    private final int         trackNumber;
-    private final String      	genre;
-    private final int         rating;
-    private final int         duration;
-    private final double     	size;
-    private final int         bitrate;
-    private final String      	extension;
-    private final String    	year;
-    private final String    	catalogNumber;
+    private final String filename;
+    private final String title;
+    private final int    cdNumber;
+    private final int    trackNumber;
+    private final String genre;
+    private final int    rating;
+    private final int    duration;
+    private final double size;
+    private final int    bitrate;
+    private final String extension;
+    private final String year;
+    private final String catalogNumber;
     
-    private final List<String>	albumArtists   	= new ArrayList<String>();
-    private final String     	album;
-    private final List<String>	artists			= new ArrayList<String>();
+    private final List<String>  albumArtists    = new ArrayList<String>();
+    private final String        album;
+    private final List<String>  artists         = new ArrayList<String>();
     
-    public SimpleSong(    String filename,
-                            String title,
-                            int cdNumber,
-                            int trackNumber,
-                            String genre,
-                            int rating,
-                            int duration,
-                            double size,
-                            int bitrate,
-                            String extension,
-                            String year,
-                            String catalogNumber,
-                            List<String> albumArtists,
-                            String album,
-                            List<String> artists) {
+    public SimpleSong(String filename,
+                      String title,
+                      int cdNumber,
+                      int trackNumber,
+                      String genre,
+                      int rating,
+                      int duration,
+                      double size,
+                      int bitrate,
+                      String extension,
+                      String year,
+                      String catalogNumber,
+                      List<String> albumArtists,
+                      String album,
+                      List<String> artists) {
         
         this.filename = filename;
         this.title = title;
@@ -62,21 +62,21 @@ public class SimpleSong implements Song, Comparable<Song> {
     }
     
     public SimpleSong(Song song) {
-        this(  	song.getFilename(),
-                song.getTitle(),
-                song.getCDNumber(),
-                song.getTrackNumber(),
-                song.getGenre(),
-                song.getRating(),
-                song.getDurationInSeconds(),
-                song.getSizeInMegaBytes(),
-                song.getBitrate(),
-                song.getExtension(),
-                song.getYear(),
-                song.getCatalogNumber(),
-                song.getAlbumArtists(),
-                song.getAlbum(),
-                song.getArtists());
+        this(song.getFilename(),
+             song.getTitle(),
+             song.getCDNumber(),
+             song.getTrackNumber(),
+             song.getGenre(),
+             song.getRating(),
+             song.getDurationInSeconds(),
+             song.getSizeInMegaBytes(),
+             song.getBitrate(),
+             song.getExtension(),
+             song.getYear(),
+             song.getCatalogNumber(),
+             song.getAlbumArtists(),
+             song.getAlbum(),
+             song.getArtists());
     }
     
     
@@ -157,20 +157,20 @@ public class SimpleSong implements Song, Comparable<Song> {
         
         StringBuilder songStr = new StringBuilder();
         
-        songStr = songStr.append("Song located at: " + filename).append(System.lineSeparator());
-        songStr = songStr.append("Title: " + title).append(System.lineSeparator());
-        songStr = songStr.append("Artists: ").append(System.lineSeparator());
+        songStr = songStr.append("Song located at: " + filename)  .append(System.lineSeparator());
+        songStr = songStr.append("Title: " + title)               .append(System.lineSeparator());
+        songStr = songStr.append("Artists: ")                     .append(System.lineSeparator());
         songStr = songStr.append(artists.stream()
                                         .map(a -> "\t" + a)
                                         .collect(Collectors.joining(System.lineSeparator())))
                          .append(System.lineSeparator());
         
-        songStr = songStr.append("CD Number: " + cdNumber).append(System.lineSeparator());
-        songStr = songStr.append("Track Number: " + trackNumber).append(System.lineSeparator());
-        songStr = songStr.append("Rating: " + rating + "/100").append(System.lineSeparator());
+        songStr = songStr.append("CD Number: " + cdNumber)        .append(System.lineSeparator());
+        songStr = songStr.append("Track Number: " + trackNumber)  .append(System.lineSeparator());
+        songStr = songStr.append("Rating: " + rating + "/100")    .append(System.lineSeparator());
         songStr = songStr.append("Duration: " + durationInMinutes).append(System.lineSeparator());
-        songStr = songStr.append("Size: " + size + "MB").append(System.lineSeparator());
-        songStr = songStr.append("Extension: ." + extension).append(System.lineSeparator());
+        songStr = songStr.append("Size: " + size + "MB")          .append(System.lineSeparator());
+        songStr = songStr.append("Extension: ." + extension)      .append(System.lineSeparator());
         songStr = songStr.append("Bitrate: " + bitrate + " kbps");
         
         return songStr.toString();

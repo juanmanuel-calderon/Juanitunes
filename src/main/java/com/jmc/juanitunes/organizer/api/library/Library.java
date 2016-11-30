@@ -11,10 +11,11 @@ public interface Library {
     public Library merge(Library other);
     
     public Set<AlbumArtist> getAlbumArtists();
-    public Set<Album> getAllAlbums();
-    public Set<Song> getAllSongs();
+    public Set<Album>       getAllAlbums();
+    public Set<Song>        getAllSongs();
+    
     public String getName();
-    public int getDurationInSeconds();
+    public int    getDurationInSeconds();
     public double getSizeInMegaBytes();
 
 }

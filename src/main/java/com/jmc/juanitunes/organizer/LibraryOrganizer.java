@@ -3,10 +3,12 @@ package com.jmc.juanitunes.organizer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.jmc.juanitunes.organizer.api.builder.SongBuilder;
 import com.jmc.juanitunes.organizer.api.library.Album;
@@ -28,16 +30,66 @@ public class LibraryOrganizer {
         currentLibrary = new SimpleLibrary(libraryName);
     }
     
-    public void importLibrary(String filename) throws IOException {
-        String librarySource = new String(Files.readAllBytes(Paths.get(filename)));
+    public void importLibrary() throws IOException {
+        
+        String filename = currentLibrary.getName();
+        
+        String librarySource = new String(Files.readAllBytes(Paths.get(filename + ".library")));
         
         Library temp = new SimpleLibrarySerializer().deserialize(librarySource);
         currentLibrary.merge(temp);
+        importMultiCDAlbums(filename + ".mcd");
+    }
+    
+    private void importMultiCDAlbums(String filename) throws IOException {
+        String mcdSource = new String(Files.readAllBytes(Paths.get(filename)));
+        
+        Stream.of(mcdSource.split(System.lineSeparator()))
+              .map(s -> reconstructMultiCDAlbum(s))
+              .forEach(mcd -> combineAlbumsToMultiCD(mcd.getName(), new ArrayList<Album>(mcd.getAlbums())));
+    }
+    
+    private MultiCDAlbum reconstructMultiCDAlbum(String source) {
+        String[] nameAndAlbums = source.split(":");
+        String name = nameAndAlbums[0];
+        String albumsStr = nameAndAlbums[1];
+        
+        Set<Album> albums = Stream.of(albumsStr.split("|--|"))
+                                  .map(cn -> currentLibrary.getAllAlbums().stream()
+                                                           .filter(a -> a.getCatalogNumber().equals(cn))
+                                                           .findFirst().get())
+                                  .collect(Collectors.toSet());
+        
+        return new MultiCDAlbum(name, albums);
     }
 
-    public void exportLibrary(String filename) throws IOException {
+    public void exportLibrary() throws IOException {
+        
+        String filename = currentLibrary.getName();
+        
         LibrarySerializer librarySerializer = new SimpleLibrarySerializer();
-        Files.write(Paths.get(filename), librarySerializer.serialize(currentLibrary).getBytes());
+        Files.write(Paths.get(filename + ".library"), librarySerializer.serialize(currentLibrary).getBytes());
+        exportMultiCDAlbums(filename + ".mcd");
+    }
+    
+    private void exportMultiCDAlbums(String filename) throws IOException {
+        
+        String multiCDAlbums = 
+            currentLibrary.getAllAlbums().stream()
+                                         .filter(a -> a instanceof MultiCDAlbum)
+                                         .map(mcd -> getMultiCDAlbumDefinition((MultiCDAlbum) mcd))
+                                         .collect(Collectors.joining(System.lineSeparator()));
+        
+        if(multiCDAlbums.isEmpty()) return;
+        Files.write(Paths.get(filename), multiCDAlbums.getBytes());                                  
+    }
+    
+    private String getMultiCDAlbumDefinition(MultiCDAlbum mcd) {
+        String name = mcd.getName();
+        String albums = mcd.getAlbums().stream()
+                                       .map(a -> a.getCatalogNumber())
+                                       .collect(Collectors.joining("|--|"));
+        return name + ":" + albums;
     }
     
     public void addToCurrentLibrary(List<String> sources) throws RuntimeException {
@@ -50,12 +102,12 @@ public class LibraryOrganizer {
         SongBuilder songBuilder = new GeneralSongBuilder();
         
         Set<Song> songs = sources.stream()
-                                  .map(s -> safeGetAllFilenames(s))
-                                  .flatMap(List::stream)
-                                  .map(f -> songBuilder.createNew(f))
-                                  .filter(s -> s.isPresent())
-                                  .map(s -> s.get())
-                                  .collect(Collectors.toSet());
+                                 .map(s -> safeGetAllFilenames(s))
+                                 .flatMap(List::stream)
+                                 .map(f -> songBuilder.createNew(f))
+                                 .filter(s -> s.isPresent())
+                                 .map(s -> s.get())
+                                 .collect(Collectors.toSet());
         
         Set<AlbumArtist> albumArtists = new AlbumArtistBuilder().createNew(songs);
         Library temp = new SimpleLibrary("temp");
@@ -75,9 +127,9 @@ public class LibraryOrganizer {
     private List<String> getAllFilenames(String source) throws IOException {
         
         return Files.walk(Paths.get(source))
-                     .filter(Files::isRegularFile)
-                     .map(p -> p.toFile().getAbsolutePath())
-                     .collect(Collectors.toList());
+                    .filter(Files::isRegularFile)
+                    .map(p -> p.toFile().getAbsolutePath())
+                    .collect(Collectors.toList());
     }
 
     public void combineAlbumsToMultiCD(String name, List<Album> albums) {                

@@ -6,9 +6,9 @@ import com.jmc.juanitunes.organizer.api.library.AlbumArtist;
 
 public enum AlbumArtistComparator implements Comparator<AlbumArtist> {
     
-    BY_NAME(       	"NAME",     (a, b) -> a.getName().compareTo(b.getName())),
-    BY_DURATION(  	"DURATION", (a, b) -> Integer.compare(a.getDurationInSeconds(), b.getDurationInSeconds())),
-    BY_SIZE(       "SIZE",     (a, b) -> Double.compare(a.getSizeInMegaBytes(), b.getSizeInMegaBytes()));
+    BY_NAME(    "NAME",     (a, b) -> a.getName().compareTo(b.getName())),
+    BY_DURATION("DURATION", (a, b) -> Integer.compare(a.getDurationInSeconds(), b.getDurationInSeconds())),
+    BY_SIZE(    "SIZE",     (a, b) -> Double.compare(a.getSizeInMegaBytes(), b.getSizeInMegaBytes()));
     
     private final String field;
     private final Comparator<AlbumArtist> comparator;

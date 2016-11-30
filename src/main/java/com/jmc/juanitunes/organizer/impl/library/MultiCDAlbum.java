@@ -1,5 +1,6 @@
 package com.jmc.juanitunes.organizer.impl.library;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -15,8 +16,8 @@ public class MultiCDAlbum implements Album {
     private final String name;
     private Set<Album> albums = new HashSet<Album>();
     
-    public MultiCDAlbum(	String name,
-                          	Set<Album> albums) {
+    public MultiCDAlbum(String name,
+                        Set<Album> albums) {
         this.name = name;
         this.albums.addAll(albums);
     }
@@ -56,10 +57,10 @@ public class MultiCDAlbum implements Album {
 
     public Optional<Album> match(String string) {
         Set<Album> matching = albums.stream()
-                                     .map(a -> a.match(string))
-                                     .filter(a-> a.isPresent())
-                                     .map(a -> a.get())
-                                     .collect(Collectors.toSet());
+                                    .map(a -> a.match(string))
+                                    .filter(a-> a.isPresent())
+                                    .map(a -> a.get())
+                                    .collect(Collectors.toSet());
         
         if(matching.isEmpty()) return Optional.empty();
         
@@ -72,10 +73,10 @@ public class MultiCDAlbum implements Album {
 
     public String getYear() {
         
-        List<String> years = albums	.stream()
-                                    .map(Album::getYear)
-                                    .distinct()
-                                    .collect(Collectors.toList());
+        List<String> years = albums.stream()
+                                   .map(Album::getYear)
+                                   .distinct()
+                                   .collect(Collectors.toList());
         
         return (years.size() == 1) ? years.get(0) : "-";
     }
@@ -86,21 +87,25 @@ public class MultiCDAlbum implements Album {
 
     public int getDurationInSeconds() {
         return albums.stream()
-                      .mapToInt(Album::getDurationInSeconds)
-                      .sum();
+                     .mapToInt(Album::getDurationInSeconds)
+                     .sum();
     }
 
     public double getSizeInMegaBytes() {
         return albums.stream()
-                      .mapToDouble(Album::getSizeInMegaBytes)
-                      .sum();
+                     .mapToDouble(Album::getSizeInMegaBytes)
+                     .sum();
     }
     
     public Set<Song> getSongs() {
         return albums.stream()
-                      .map(Album::getSongs)
-                      .flatMap(Set::stream)
-                      .collect(Collectors.toSet());
+                     .map(Album::getSongs)
+                     .flatMap(Set::stream)
+                     .collect(Collectors.toSet());
+    }
+    
+    public Set<Album> getAlbums() {
+      return Collections.unmodifiableSet(albums);
     }
     
     @Override

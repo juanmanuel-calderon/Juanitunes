@@ -24,13 +24,12 @@ public class FlacSongBuilder implements SongBuilder {
             Tag tag = songFile.getTag();
             AudioHeader audioHeader = songFile.getAudioHeader();
             
-            String ext = "flac";
-            int bitrate = new Long(audioHeader.getBitRateAsNumber()).intValue();
-            int duration = audioHeader.getTrackLength();
-            double size = file.length() / (1024d * 1024d);
-            
-            String title = tag.getFirst(FieldKey.TITLE);
-            int cdNumber = Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
+            String ext      = "flac";
+            int bitrate     = new Long(audioHeader.getBitRateAsNumber()).intValue();
+            int duration    = audioHeader.getTrackLength();
+            double size     = file.length() / (1024d * 1024d);
+            String title    = tag.getFirst(FieldKey.TITLE);
+            int cdNumber    = Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
             int trackNumber = Integer.parseInt(tag.getFirst(FieldKey.TRACK));
             
             int rating = -1;
@@ -38,36 +37,36 @@ public class FlacSongBuilder implements SongBuilder {
                 rating = Integer.parseInt(tag.getFirst(FieldKey.RATING));
             } catch (NumberFormatException e) { }
             
-            String genre = tag.getFirst(FieldKey.GENRE);
-            String year = tag.getFirst(FieldKey.YEAR);
+            String genre         = tag.getFirst(FieldKey.GENRE);
+            String year          = tag.getFirst(FieldKey.YEAR);
             String catalogNumber = tag.getFirst(FieldKey.COMMENT);
-            String album = tag.getFirst(FieldKey.ALBUM);
+            String album         = tag.getFirst(FieldKey.ALBUM);
             
             List<String> artists = new ArrayList<String>();
-            tag.getFields(FieldKey.ARTIST)	.stream()
-                                           	.map(t -> t.toString())
-                                           	.forEach(t -> artists.add(t));
+            tag.getFields(FieldKey.ARTIST).stream()
+                                          .map(t -> t.toString())
+                                          .forEach(t -> artists.add(t));
             
             List<String> albumArtists = new ArrayList<String>();
-            tag.getFields(FieldKey.ALBUM_ARTIST)	.stream()
-                                              	  	.map(t -> t.toString())
-                                              	  	.forEach(t -> albumArtists.add(t));
+            tag.getFields(FieldKey.ALBUM_ARTIST).stream()
+                                                .map(t -> t.toString())
+                                                .forEach(t -> albumArtists.add(t));
             
-            Song flacSong = new SimpleSong(    source,
-                                                title,
-                                                cdNumber,
-                                                trackNumber,
-                                                genre,
-                                                rating,
-                                                duration,
-                                                size,
-                                                bitrate,
-                                                ext,
-                                                year,
-                                                catalogNumber,
-                                                albumArtists,
-                                                album,
-                                                artists);
+            Song flacSong = new SimpleSong(source,
+                                           title,
+                                           cdNumber,
+                                           trackNumber,
+                                           genre,
+                                           rating,
+                                           duration,
+                                           size,
+                                           bitrate,
+                                           ext,
+                                           year,
+                                           catalogNumber,
+                                           albumArtists,
+                                           album,
+                                           artists);
             
             return Optional.of(flacSong);
             

@@ -16,9 +16,9 @@ public class SimpleLibrarySerializer implements LibrarySerializer {
 
     public String serialize(Library s) {
         StringBuilder str = new StringBuilder("");
-        str.append("<library>")         	.append(System.lineSeparator());
-        s.getAllSongs().forEach(song -> str	.append(new SimpleSongSerializer().serialize(song)));
-        str.append("</library>")           	.append(System.lineSeparator());        
+        str.append("<library>")            .append(System.lineSeparator());
+        s.getAllSongs().forEach(song -> str.append(new SimpleSongSerializer().serialize(song)));
+        str.append("</library>")           .append(System.lineSeparator());        
         return str.toString();    
     }
 

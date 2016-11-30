@@ -14,9 +14,10 @@ public interface AlbumArtist {
     public Optional<AlbumArtist> match(String string);
     
     public Set<Album> getAlbums();
-    public Set<Song> getAllSongs();
+    public Set<Song>  getAllSongs();
+    
     public String getName();
-    public int getDurationInSeconds();
+    public int    getDurationInSeconds();
     public double getSizeInMegaBytes();
 
 }

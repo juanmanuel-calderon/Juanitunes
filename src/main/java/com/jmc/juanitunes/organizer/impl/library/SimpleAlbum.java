@@ -21,10 +21,10 @@ public class SimpleAlbum implements Album, Comparable<Album> {
     
     private Set<Song> songs = new TreeSet<Song>();
     
-    public SimpleAlbum(  	String name,
-                        	String year,
-                        	String catalogNumber,
-                        	Set<Song> songs) {
+    public SimpleAlbum(String name,
+                       String year,
+                       String catalogNumber,
+                       Set<Song> songs) {
         
         this.name = name;
         this.year = year;
@@ -35,10 +35,10 @@ public class SimpleAlbum implements Album, Comparable<Album> {
     }
     
     public SimpleAlbum(Album album, boolean copySongs) {    
-        this(  	album.getName(),
-                album.getYear(),
-                album.getCatalogNumber(),
-                copySongs ? album.getSongs() : new TreeSet<Song>());
+        this(album.getName(),
+             album.getYear(),
+             album.getCatalogNumber(),
+             copySongs ? album.getSongs() : new TreeSet<Song>());
     }
     
     public SimpleAlbum(Album album) {
@@ -87,8 +87,8 @@ public class SimpleAlbum implements Album, Comparable<Album> {
              .filter(song -> song.match(string).isPresent())
              .forEach(filteredAlbum::addSong);
 
-        return filteredAlbum.getSongs().isEmpty() 	? Optional.empty()
-                                                  	: Optional.of(filteredAlbum);
+        return filteredAlbum.getSongs().isEmpty() ? Optional.empty()
+                                                  : Optional.of(filteredAlbum);
     }
 
     public String getName() {
@@ -119,10 +119,10 @@ public class SimpleAlbum implements Album, Comparable<Album> {
     public String toString() {
         StringBuilder albumStr = new StringBuilder();
         
-        albumStr = albumStr.append("Album Name: " + name).append(System.lineSeparator());
-        albumStr = albumStr.append("Year: " + year).append(System.lineSeparator());
+        albumStr = albumStr.append("Album Name: " + name)   .append(System.lineSeparator());
+        albumStr = albumStr.append("Year: " + year)         .append(System.lineSeparator());
         albumStr = albumStr.append("Code: " + catalogNumber).append(System.lineSeparator());
-        albumStr = albumStr.append("Songs:").append(System.lineSeparator());
+        albumStr = albumStr.append("Songs:")                .append(System.lineSeparator());
         albumStr.append(
                      songs.stream()
                           .map(Song::toString)

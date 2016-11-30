@@ -14,14 +14,14 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
 
-    private final String 	name;
-    private int           	duration;
-    private double       	size;
+    private final String    name;
+    private int             duration;
+    private double          size;
 
     private Set<Album> albums = new TreeSet<Album>();
 
-    public SimpleAlbumArtist(	String name,
-                                Set<Album> albums) {
+    public SimpleAlbumArtist(String name,
+                             Set<Album> albums) {
         this.name = name;
         this.duration = 0;
         this.size = 0;
@@ -29,8 +29,8 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
     }
     
     public SimpleAlbumArtist(AlbumArtist albumArtist, boolean copyAlbums) {
-        this(	albumArtist.getName(),
-                copyAlbums ? albumArtist.getAlbums() : new TreeSet<Album>());
+        this(albumArtist.getName(),
+             copyAlbums ? albumArtist.getAlbums() : new TreeSet<Album>());
     }
     
     public SimpleAlbumArtist(AlbumArtist albumArtist) {
@@ -77,9 +77,9 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
     
     private Album lookup(Album album) {
         return albums.stream()
-                      .filter(a -> a.equals(album))
-                      .findFirst()
-                      .get();
+                     .filter(a -> a.equals(album))
+                     .findFirst()
+                     .get();
     }
 
     public Optional<AlbumArtist> match(String string) {
@@ -91,8 +91,8 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
               .filter(album -> album.match(string).isPresent())
               .forEach(filteredAlbumArtist::addAlbum);
 
-        return filteredAlbumArtist.getAlbums().isEmpty() 	? Optional.empty()
-                                                         	: Optional.of(filteredAlbumArtist);
+        return filteredAlbumArtist.getAlbums().isEmpty() ? Optional.empty()
+                                                         : Optional.of(filteredAlbumArtist);
     }
 
     public String getName() {
@@ -112,11 +112,10 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
     }
     
     public Set<Song> getAllSongs() {
-        Set<Song> allSongs = 
-                albums.stream()
-                      .map(Album::getSongs)
-                      .flatMap(Set::stream)
-                      .collect(Collectors.toSet());
+        Set<Song> allSongs = albums.stream()
+                                   .map(Album::getSongs)
+                                   .flatMap(Set::stream)
+                                   .collect(Collectors.toSet());
         
         return Collections.unmodifiableSet(allSongs);
     }
@@ -126,11 +125,11 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
         StringBuilder albumArtistStr = new StringBuilder();
         
         albumArtistStr = albumArtistStr.append("Album Artist: " + name).append(System.lineSeparator());
-        albumArtistStr = albumArtistStr.append("Albums:").append(System.lineSeparator());
+        albumArtistStr = albumArtistStr.append("Albums:")              .append(System.lineSeparator());
         albumArtistStr.append(
-                     albums	.stream()
-                          	.map(Album::toString)
-                          	.collect(Collectors.joining(System.lineSeparator()))
+                     albums.stream()
+                           .map(Album::toString)
+                           .collect(Collectors.joining(System.lineSeparator()))
                  );
 
         return albumArtistStr.toString();

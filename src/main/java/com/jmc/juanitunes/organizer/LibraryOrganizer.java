@@ -1,5 +1,6 @@
 package com.jmc.juanitunes.organizer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,6 +43,9 @@ public class LibraryOrganizer {
     }
     
     private void importMultiCDAlbums(String filename) throws IOException {
+    	
+    	if(!(new File(filename).exists())) return;
+    	
         String mcdSource = new String(Files.readAllBytes(Paths.get(filename)));
         
         Stream.of(mcdSource.split(System.lineSeparator()))
@@ -120,7 +124,9 @@ public class LibraryOrganizer {
         try {
             return getAllFilenames(source);
         } catch(IOException e) {
-            throw new RuntimeException(e.getMessage());
+        	String message = "Message: " + e.getMessage() + System.lineSeparator();
+        	message += "Cause: " + e.getCause();
+            throw new RuntimeException(message);
         }
     }
 

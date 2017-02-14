@@ -28,29 +28,32 @@ public class FlacSongBuilder implements SongBuilder {
             int bitrate     = new Long(audioHeader.getBitRateAsNumber()).intValue();
             int duration    = audioHeader.getTrackLength();
             double size     = file.length() / (1024d * 1024d);
-            String title    = tag.getFirst(FieldKey.TITLE);
-            int cdNumber    = Integer.parseInt(tag.getFirst(FieldKey.DISC_NO));
-            int trackNumber = Integer.parseInt(tag.getFirst(FieldKey.TRACK));
             
-            int rating = -1;
-            try {
-                rating = Integer.parseInt(tag.getFirst(FieldKey.RATING));
-            } catch (NumberFormatException e) { }
+            String title    = tag.getFirst(FieldKey.TITLE);
+            if(title.isEmpty()) title = new File(source).getName().toString();
+            
+            int cdNumber = parseOrDefault(tag.getFirst(FieldKey.DISC_NO), 0);  
+            int trackNumber = parseOrDefault(tag.getFirst(FieldKey.TRACK), 0);     
+            int rating = parseOrDefault(tag.getFirst(FieldKey.RATING), -1);
             
             String genre         = tag.getFirst(FieldKey.GENRE);
             String year          = tag.getFirst(FieldKey.YEAR);
             String catalogNumber = tag.getFirst(FieldKey.COMMENT);
+            
             String album         = tag.getFirst(FieldKey.ALBUM);
+            if(album.isEmpty()) album = "[[Unknown]]";
             
             List<String> artists = new ArrayList<String>();
             tag.getFields(FieldKey.ARTIST).stream()
                                           .map(t -> t.toString())
                                           .forEach(t -> artists.add(t));
+            if(artists.isEmpty()) artists.add("[[Unknown]]");
             
             List<String> albumArtists = new ArrayList<String>();
             tag.getFields(FieldKey.ALBUM_ARTIST).stream()
                                                 .map(t -> t.toString())
                                                 .forEach(t -> albumArtists.add(t));
+            if(albumArtists.isEmpty()) albumArtists.add("[[Unknown]]");
             
             Song flacSong = new SimpleSong(source,
                                            title,
@@ -77,5 +80,13 @@ public class FlacSongBuilder implements SongBuilder {
         
         return Optional.empty();
     }
-
+    
+    private int parseOrDefault(String value, int def) {
+    	try {
+    		return Integer.parseInt(value);
+    	} catch(NumberFormatException e) {
+    		return def;
+    	}
+    }
+    
 }

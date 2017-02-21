@@ -30,10 +30,12 @@ public class LibraryOrganizer {
     public LibraryOrganizer(String libraryName) {
         currentLibrary = new SimpleLibrary(libraryName);
     }
-    
+
     public void importLibrary() throws IOException {
-        
-        String filename = currentLibrary.getName();
+    	importLibrary(currentLibrary.getName());
+    }
+    
+    public void importLibrary(String filename) throws IOException {
         
         String librarySource = new String(Files.readAllBytes(Paths.get(filename + ".library")));
         
@@ -68,8 +70,10 @@ public class LibraryOrganizer {
     }
 
     public void exportLibrary() throws IOException {
-        
-        String filename = currentLibrary.getName();
+    	exportLibrary(currentLibrary.getName());
+    }
+    
+    public void exportLibrary(String filename) throws IOException {
         
         LibrarySerializer librarySerializer = new SimpleLibrarySerializer();
         Files.write(Paths.get(filename + ".library"), librarySerializer.serialize(currentLibrary).getBytes());

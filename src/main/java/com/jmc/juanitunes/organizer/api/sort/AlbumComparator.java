@@ -8,7 +8,9 @@ public enum AlbumComparator implements Comparator<Album> {
     
     BY_NAME(    "NAME",     (a, b) -> a.getName().compareTo(b.getName())),
     BY_DURATION("DURATION", (a, b) -> Integer.compare(a.getDurationInSeconds(), b.getDurationInSeconds())),
-    BY_SIZE(    "SIZE",     (a, b) -> Double.compare(a.getSizeInMegaBytes(), b.getSizeInMegaBytes()));
+    BY_SIZE(    "SIZE",     (a, b) -> Double.compare(a.getSizeInMegaBytes(), b.getSizeInMegaBytes())),
+	BY_YEAR(    "YEAR",     (a, b) -> a.getYear().compareTo(b.getYear())),
+	BY_CATALOGNUMBER( "CATALOG_NUMBER", (a, b) -> a.getCatalogNumber().compareTo(b.getCatalogNumber()));
     
     private final String field;
     private final Comparator<Album> comparator;

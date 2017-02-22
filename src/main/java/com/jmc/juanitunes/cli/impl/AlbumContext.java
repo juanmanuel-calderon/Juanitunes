@@ -1,5 +1,6 @@
 package com.jmc.juanitunes.cli.impl;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.jmc.juanitunes.cli.api.Context;
@@ -68,6 +69,22 @@ public class AlbumContext implements Context {
 		res += "Bitrate: " + s.getBitrate() + System.lineSeparator();
 		res += "Extension: " + s.getExtension();
 		return res;
+	}
+	
+	@Override
+	public String find(String string) {
+		Optional<Album> matchResult = album.match(string);
+		if(matchResult.isPresent()) {
+			Album found = matchResult.get();
+			return
+				found.getSongs()
+					 .stream()
+			    	 .map((Song s) -> String.format("%02d", s.getCDNumber()) + "-" + 
+								   	  String.format("%02d", s.getTrackNumber()) + ". " + s.getTitle())
+			    	 .collect(Collectors.joining(System.lineSeparator()));
+		} else {
+			return "No match found for " + string;
+		}
 	}
 	
 	@Override

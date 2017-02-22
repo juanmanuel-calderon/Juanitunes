@@ -70,7 +70,7 @@ public class SimpleSongSerializer implements SongSerializer {
         int bitrate = 0;
         String extension = "";
         String album = "";
-        String catalogNumber = "";
+        String catalog = "";
         String year = "";
         List<String> albumArtists = new ArrayList<String>();
         List<String> artists = new ArrayList<String>();
@@ -86,25 +86,28 @@ public class SimpleSongSerializer implements SongSerializer {
             String key = keyValue[0];
             String value = keyValue[1];
             switch(key) {
-            case "filename":        filename    = value;                     break;
-            case "title":           title       = value;                     break;
-            case "cdnumber":        cdNumber    = Integer.parseInt(value);   break;
-            case "tracknumber":     trackNumber = Integer.parseInt(value);   break;
-            case "genre":           genre       = value;                     break;
-            case "rating":          rating      = Integer.parseInt(value);   break;
-            case "duration":        duration    = Integer.parseInt(value);   break;
-            case "size":            size        = Double.parseDouble(value); break;
-            case "bitrate":         bitrate     = Integer.parseInt(value);   break;
-            case "extension":       extension   = value;                     break;
-            case "artist":          artists.add(value);                      break;
-            case "albumartist":     albumArtists.add(value);                 break;
+            case "filename":       	filename    = value;                     break;
+            case "title":          	title       = value;                     break;
+            case "cdnumber":       	cdNumber    = Integer.parseInt(value);   break;
+            case "tracknumber":    	trackNumber = Integer.parseInt(value);   break;
+            case "genre":          	genre       = value;                     break;
+            case "rating":         	rating      = Integer.parseInt(value);   break;
+            case "duration":       	duration    = Integer.parseInt(value);   break;
+            case "size":           	size        = Double.parseDouble(value); break;
+            case "bitrate":        	bitrate     = Integer.parseInt(value);   break;
+            case "ext":       		extension   = value;                     break;
+            case "album":			album 		= value;					 break;
+            case "catalog":			catalog 	= value;					 break;
+            case "year":			year		= value;					 break;
+            case "artist":         	artists.add(value);                      break;
+            case "albumartist":    	albumArtists.add(value);                 break;
             default: break;
             }
         }
         
         return new SimpleSong(filename, title, cdNumber, trackNumber, 
                               genre, rating, duration, size, bitrate, 
-                              extension, year, catalogNumber, albumArtists, 
+                              extension, year, catalog, albumArtists, 
                               album, artists);
     }
 }

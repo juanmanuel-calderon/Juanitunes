@@ -75,6 +75,7 @@ public class LibraryOrganizer {
     
     public void exportLibrary(String filename) throws IOException {
         
+    	(new File(filename)).delete();
         LibrarySerializer librarySerializer = new SimpleLibrarySerializer();
         Files.write(Paths.get(filename + ".library"), librarySerializer.serialize(currentLibrary).getBytes());
         exportMultiCDAlbums(filename + ".mcd");

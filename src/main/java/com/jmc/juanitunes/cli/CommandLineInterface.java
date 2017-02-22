@@ -40,6 +40,9 @@ public class CommandLineInterface {
 					case "detail":
 						System.out.println(currentContext.detail(Integer.parseInt(command[1])));
 						break;
+					case "find":
+						System.out.println(currentContext.find(command[1]));
+						break;
 					case "exit": 
 						sc.close();
 						return;

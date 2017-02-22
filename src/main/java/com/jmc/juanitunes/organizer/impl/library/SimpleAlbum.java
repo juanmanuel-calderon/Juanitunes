@@ -78,13 +78,15 @@ public class SimpleAlbum implements Album, Comparable<Album> {
 
     public Optional<Album> match(String string) {
         
-        if(name.contains(string)) return Optional.of(this);
-        if(year.contains(string)) return Optional.of(this);
-        if(catalogNumber.contains(string)) return Optional.of(this);
+        if(name.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
+        if(year.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
+        if(catalogNumber.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
         
         Album filteredAlbum = new SimpleAlbum(this, false);
         songs.stream()
-             .filter(song -> song.match(string).isPresent())
+        	 .map(s -> s.match(string.toLowerCase()))
+        	 .filter(Optional::isPresent)
+        	 .map(Optional::get)
              .forEach(filteredAlbum::addSong);
 
         return filteredAlbum.getSongs().isEmpty() ? Optional.empty()

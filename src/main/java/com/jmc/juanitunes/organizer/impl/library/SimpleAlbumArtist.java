@@ -84,11 +84,13 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
 
     public Optional<AlbumArtist> match(String string) {
 
-        if(name.contains(string)) return Optional.of(this);
+        if(name.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
 
         AlbumArtist filteredAlbumArtist = new SimpleAlbumArtist(this, false);
         albums.stream()
-              .filter(album -> album.match(string).isPresent())
+		      .map(a -> a.match(string.toLowerCase()))
+		  	  .filter(Optional::isPresent)
+		  	  .map(Optional::get)
               .forEach(filteredAlbumArtist::addAlbum);
 
         return filteredAlbumArtist.getAlbums().isEmpty() ? Optional.empty()

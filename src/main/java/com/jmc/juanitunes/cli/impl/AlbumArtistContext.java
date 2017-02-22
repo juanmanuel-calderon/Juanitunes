@@ -1,11 +1,13 @@
 package com.jmc.juanitunes.cli.impl;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.jmc.juanitunes.cli.api.Context;
 import com.jmc.juanitunes.organizer.Utils;
 import com.jmc.juanitunes.organizer.api.library.Album;
 import com.jmc.juanitunes.organizer.api.library.AlbumArtist;
+import com.jmc.juanitunes.organizer.api.library.Song;
 import com.jmc.juanitunes.organizer.api.sort.AlbumComparator;
 
 public class AlbumArtistContext implements Context {
@@ -74,6 +76,27 @@ public class AlbumArtistContext implements Context {
 					  			   			". " + s.getTitle())
 					  	   .collect(Collectors.joining(System.lineSeparator()));
 		return res;
+	}
+	
+	@Override
+	public String find(String string) {
+		Optional<AlbumArtist> matchResult = albumArtist.match(string);
+		if(matchResult.isPresent()) {
+			AlbumArtist found = matchResult.get();
+			return
+			  found.getAlbums()
+			       .stream()
+			       .map((Album a) ->
+			         a.getSongs()
+			    	  .stream()
+			    	  .map((Song s) -> a.getName() + "/" + String.format("%02d", s.getCDNumber()) + "-" + 
+		  			   									   String.format("%02d", s.getTrackNumber()) + ". " + s.getTitle())
+			    	  .collect(Collectors.joining(System.lineSeparator()))
+			       )
+			       .collect(Collectors.joining(System.lineSeparator()));
+		} else {
+			return "No match found for " + string;
+		}
 	}
 
 }

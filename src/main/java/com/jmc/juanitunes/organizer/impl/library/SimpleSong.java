@@ -82,11 +82,11 @@ public class SimpleSong implements Song, Comparable<Song> {
     
     public Optional<Song> match(String string) {
         
-        if(title.contains(string)) return Optional.of(this);
-        if(genre.contains(string)) return Optional.of(this);
-        if(extension.contains(string)) return Optional.of(this);
+        if(title.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
+        if(genre.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
+        if(extension.toLowerCase().contains(string.toLowerCase())) return Optional.of(this);
 
-        if(artists.stream().anyMatch(a -> a.contains(string))) return Optional.of(this);
+        if(artists.stream().anyMatch(a -> a.contains(string.toLowerCase()))) return Optional.of(this);
         
         return Optional.empty();
     }

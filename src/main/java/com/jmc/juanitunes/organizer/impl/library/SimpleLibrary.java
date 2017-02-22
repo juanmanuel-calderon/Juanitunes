@@ -2,6 +2,7 @@ package com.jmc.juanitunes.organizer.impl.library;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -22,6 +23,20 @@ public class SimpleLibrary implements Library {
     
     public SimpleLibrary(String name) {
         this.name = name;
+    }
+    
+    public SimpleLibrary(Library library, boolean copyAlbumArtists) {        
+    	this(library.getName());
+    	if(copyAlbumArtists) {
+    		albumArtists = library.getAlbumArtists()
+    							  .stream()
+        						  .map(aa -> new SimpleAlbumArtist(aa, true))
+        						  .collect(Collectors.toSet());
+    	}
+    }
+    
+    public SimpleLibrary(Library library) {
+    	this(library, true);
     }
     
     public Library addAlbumArtist(AlbumArtist albumArtist) {
@@ -55,7 +70,7 @@ public class SimpleLibrary implements Library {
                                .filter(aa -> !albumArtists.contains(aa))
                                .forEach(aa -> addAlbumArtist(aa));
         other.getAlbumArtists().stream()
-                               .filter(aa -> !albumArtists.contains(aa))
+                               .filter(aa -> albumArtists.contains(aa))
                                .forEach(aa -> lookup(aa).merge(aa));
          
         return this;
@@ -66,6 +81,19 @@ public class SimpleLibrary implements Library {
                            .filter(aa -> aa.equals(albumArtist))
                            .findFirst()
                            .get();
+    }
+    
+    public Optional<Library> match(String string) {
+
+        Library filteredLibrary = new SimpleLibrary(this, false);
+        albumArtists.stream()
+              	    .map(aa -> aa.match(string.toLowerCase()))
+              	    .filter(Optional::isPresent)
+              	    .map(Optional::get)
+              	    .forEach(filteredLibrary::addAlbumArtist);
+
+        return filteredLibrary.getAlbumArtists().isEmpty() ? Optional.empty()
+                                                         	: Optional.of(filteredLibrary);
     }
     
     public String getName() {

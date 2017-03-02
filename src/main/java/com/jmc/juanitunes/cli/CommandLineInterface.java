@@ -3,16 +3,15 @@ package com.jmc.juanitunes.cli;
 import java.util.Scanner;
 
 import com.jmc.juanitunes.cli.api.Context;
+import com.jmc.juanitunes.cli.impl.AlbumArtistContext;
 import com.jmc.juanitunes.cli.impl.LibraryContext;
 import com.jmc.juanitunes.organizer.LibraryOrganizer;
 
 public class CommandLineInterface {
     
     private Context currentContext;
-    //private LibraryOrganizer libraryOrganizer;
     
     public CommandLineInterface(LibraryOrganizer libraryOrganizer) {
-        //this.libraryOrganizer = libraryOrganizer;
         currentContext = new LibraryContext(libraryOrganizer.getCurrentLibrary());
     }
     
@@ -42,6 +41,14 @@ public class CommandLineInterface {
                         break;
                     case "find":
                         System.out.println(currentContext.find(command[1]));
+                        break;
+                    case "merge":
+                        if(currentContext instanceof AlbumArtistContext) {
+                            AlbumArtistContext aac = (AlbumArtistContext) currentContext;
+                            aac.merge(Integer.parseInt(command[1]), Integer.parseInt(command[2]), command[3]);
+                        } else {
+                            throw new UnsupportedOperationException("merge operation not supported");
+                        }
                         break;
                     case "exit": 
                         sc.close();

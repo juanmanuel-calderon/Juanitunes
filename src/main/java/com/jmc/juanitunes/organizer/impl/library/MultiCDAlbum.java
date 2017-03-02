@@ -6,12 +6,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import com.jmc.juanitunes.organizer.Utils;
 import com.jmc.juanitunes.organizer.api.library.Album;
 import com.jmc.juanitunes.organizer.api.library.Song;
 
-public class MultiCDAlbum implements Album {
+public class MultiCDAlbum implements Album, Comparable<Album> {
     
     private final String name;
     private Set<Album> albums = new HashSet<Album>();
@@ -19,7 +21,10 @@ public class MultiCDAlbum implements Album {
     public MultiCDAlbum(String name,
                         Set<Album> albums) {
         this.name = name;
-        this.albums.addAll(albums);
+        albums.stream().forEach(a -> {
+            if(a instanceof MultiCDAlbum) this.albums.addAll(((MultiCDAlbum) a).getAlbums());
+            else this.albums.add(a);
+        });
     }
 
     public Album addSong(Song song) {
@@ -37,6 +42,13 @@ public class MultiCDAlbum implements Album {
               .findFirst()
               .get()
               .removeSong(song);
+        return this;
+    }
+    
+    public Album sortInternal(Comparator<Album>... criteria) {
+        Set<Album> sortedAlbums = new TreeSet<Album>(Utils.generateFinalComparator(criteria));
+        sortedAlbums.addAll(albums);
+        albums = sortedAlbums;
         return this;
     }
 
@@ -132,6 +144,10 @@ public class MultiCDAlbum implements Album {
         if(!otherAlbum.getName().equals(name)) return false;
         
         return true;            
+    }
+    
+    public int compareTo(Album other) {
+        return getYear().compareTo(other.getYear());
     }
 
 }

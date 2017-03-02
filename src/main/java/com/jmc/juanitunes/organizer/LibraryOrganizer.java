@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -47,8 +48,8 @@ public class LibraryOrganizer {
     private void importMultiCDAlbums(String filename) throws IOException {
         
         if(!(new File(filename).exists())) return;
-        
         String mcdSource = new String(Files.readAllBytes(Paths.get(filename)));
+        new File(filename).delete();
         
         Stream.of(mcdSource.split(System.lineSeparator()))
               .map(s -> reconstructMultiCDAlbum(s))
@@ -60,10 +61,12 @@ public class LibraryOrganizer {
         String name = nameAndAlbums[0];
         String albumsStr = nameAndAlbums[1];
         
-        Set<Album> albums = Stream.of(albumsStr.split("|--|"))
+        Set<Album> albums = Stream.of(albumsStr.split("\\|\\-\\-\\|"))
                                   .map(cn -> currentLibrary.getAllAlbums().stream()
                                                            .filter(a -> a.getCatalogNumber().equals(cn))
-                                                           .findFirst().get())
+                                                           .findFirst())
+                                  .filter(Optional::isPresent)
+                                  .map(o -> o.get())
                                   .collect(Collectors.toSet());
         
         return new MultiCDAlbum(name, albums);

@@ -15,9 +15,9 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleLibrary implements Library {
 
-    private final String 	name;
-    private int           	duration;
-    private double       	size;
+    private final String    name;
+    private int             duration;
+    private double          size;
     
     private Set<AlbumArtist> albumArtists = new TreeSet<AlbumArtist>();
     
@@ -26,17 +26,17 @@ public class SimpleLibrary implements Library {
     }
     
     public SimpleLibrary(Library library, boolean copyAlbumArtists) {        
-    	this(library.getName());
-    	if(copyAlbumArtists) {
-    		albumArtists = library.getAlbumArtists()
-    							  .stream()
-        						  .map(aa -> new SimpleAlbumArtist(aa, true))
-        						  .collect(Collectors.toSet());
-    	}
+        this(library.getName());
+        if(copyAlbumArtists) {
+            albumArtists = library.getAlbumArtists()
+                                  .stream()
+                                  .map(aa -> new SimpleAlbumArtist(aa, true))
+                                  .collect(Collectors.toSet());
+        }
     }
     
     public SimpleLibrary(Library library) {
-    	this(library, true);
+        this(library, true);
     }
     
     public Library addAlbumArtist(AlbumArtist albumArtist) {
@@ -87,13 +87,13 @@ public class SimpleLibrary implements Library {
 
         Library filteredLibrary = new SimpleLibrary(this, false);
         albumArtists.stream()
-              	    .map(aa -> aa.match(string.toLowerCase()))
-              	    .filter(Optional::isPresent)
-              	    .map(Optional::get)
-              	    .forEach(filteredLibrary::addAlbumArtist);
+                    .map(aa -> aa.match(string.toLowerCase()))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .forEach(filteredLibrary::addAlbumArtist);
 
         return filteredLibrary.getAlbumArtists().isEmpty() ? Optional.empty()
-                                                         	: Optional.of(filteredLibrary);
+                                                            : Optional.of(filteredLibrary);
     }
     
     public String getName() {
@@ -123,7 +123,7 @@ public class SimpleLibrary implements Library {
     
     public Set<Song> getAllSongs() {
         Set<Song> allSongs = albumArtists.stream()
-                                       	 .map(AlbumArtist::getAllSongs)
+                                         .map(AlbumArtist::getAllSongs)
                                          .flatMap(Set::stream)
                                          .collect(Collectors.toSet());
         
@@ -137,8 +137,8 @@ public class SimpleLibrary implements Library {
         albumArtistStr = albumArtistStr.append("Library: " + name).append(System.lineSeparator());
         albumArtistStr = albumArtistStr.append("Albums Artists:") .append(System.lineSeparator());
         albumArtistStr.append(albumArtists.stream()
-                                 		  .map(AlbumArtist::toString)
-                                 		  .collect(Collectors.joining(System.lineSeparator()))
+                                          .map(AlbumArtist::toString)
+                                          .collect(Collectors.joining(System.lineSeparator()))
                       );
 
         return albumArtistStr.toString();

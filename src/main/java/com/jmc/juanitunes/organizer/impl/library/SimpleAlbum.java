@@ -13,11 +13,11 @@ import com.jmc.juanitunes.organizer.api.library.Song;
 
 public class SimpleAlbum implements Album, Comparable<Album> {
     
-    private final String  	name;
-    private final String  	year;
-    private final String 	catalogNumber;
-    private int           	duration;
-    private double        	size;
+    private final String    name;
+    private final String    year;
+    private final String    catalogNumber;
+    private int             duration;
+    private double          size;
     
     private Set<Song> songs = new TreeSet<Song>();
     
@@ -84,9 +84,9 @@ public class SimpleAlbum implements Album, Comparable<Album> {
         
         Album filteredAlbum = new SimpleAlbum(this, false);
         songs.stream()
-        	 .map(s -> s.match(string.toLowerCase()))
-        	 .filter(Optional::isPresent)
-        	 .map(Optional::get)
+             .map(s -> s.match(string.toLowerCase()))
+             .filter(Optional::isPresent)
+             .map(Optional::get)
              .forEach(filteredAlbum::addSong);
 
         return filteredAlbum.getSongs().isEmpty() ? Optional.empty()

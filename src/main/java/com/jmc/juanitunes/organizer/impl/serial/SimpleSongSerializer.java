@@ -86,21 +86,21 @@ public class SimpleSongSerializer implements SongSerializer {
             String key = keyValue[0];
             String value = keyValue[1];
             switch(key) {
-            case "filename":       	filename    = value;                     break;
-            case "title":          	title       = value;                     break;
-            case "cdnumber":       	cdNumber    = Integer.parseInt(value);   break;
-            case "tracknumber":    	trackNumber = Integer.parseInt(value);   break;
-            case "genre":          	genre       = value;                     break;
-            case "rating":         	rating      = Integer.parseInt(value);   break;
-            case "duration":       	duration    = Integer.parseInt(value);   break;
-            case "size":           	size        = Double.parseDouble(value); break;
-            case "bitrate":        	bitrate     = Integer.parseInt(value);   break;
-            case "ext":       		extension   = value;                     break;
-            case "album":			album 		= value;					 break;
-            case "catalog":			catalog 	= value;					 break;
-            case "year":			year		= value;					 break;
-            case "artist":         	artists.add(value);                      break;
-            case "albumartist":    	albumArtists.add(value);                 break;
+            case "filename":        filename    = value;                     break;
+            case "title":           title       = value;                     break;
+            case "cdnumber":        cdNumber    = Integer.parseInt(value);   break;
+            case "tracknumber":     trackNumber = Integer.parseInt(value);   break;
+            case "genre":           genre       = value;                     break;
+            case "rating":          rating      = Integer.parseInt(value);   break;
+            case "duration":        duration    = Integer.parseInt(value);   break;
+            case "size":            size        = Double.parseDouble(value); break;
+            case "bitrate":         bitrate     = Integer.parseInt(value);   break;
+            case "ext":             extension   = value;                     break;
+            case "album":           album       = value;                     break;
+            case "catalog":         catalog     = value;                     break;
+            case "year":            year        = value;                     break;
+            case "artist":          artists.add(value);                      break;
+            case "albumartist":     albumArtists.add(value);                 break;
             default: break;
             }
         }

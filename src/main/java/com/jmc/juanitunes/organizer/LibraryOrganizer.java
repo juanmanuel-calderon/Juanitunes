@@ -32,7 +32,7 @@ public class LibraryOrganizer {
     }
 
     public void importLibrary() throws IOException {
-    	importLibrary(currentLibrary.getName());
+        importLibrary(currentLibrary.getName());
     }
     
     public void importLibrary(String filename) throws IOException {
@@ -45,9 +45,9 @@ public class LibraryOrganizer {
     }
     
     private void importMultiCDAlbums(String filename) throws IOException {
-    	
-    	if(!(new File(filename).exists())) return;
-    	
+        
+        if(!(new File(filename).exists())) return;
+        
         String mcdSource = new String(Files.readAllBytes(Paths.get(filename)));
         
         Stream.of(mcdSource.split(System.lineSeparator()))
@@ -70,12 +70,12 @@ public class LibraryOrganizer {
     }
 
     public void exportLibrary() throws IOException {
-    	exportLibrary(currentLibrary.getName());
+        exportLibrary(currentLibrary.getName());
     }
     
     public void exportLibrary(String filename) throws IOException {
         
-    	(new File(filename)).delete();
+        (new File(filename)).delete();
         LibrarySerializer librarySerializer = new SimpleLibrarySerializer();
         Files.write(Paths.get(filename + ".library"), librarySerializer.serialize(currentLibrary).getBytes());
         exportMultiCDAlbums(filename + ".mcd");
@@ -129,8 +129,8 @@ public class LibraryOrganizer {
         try {
             return getAllFilenames(source);
         } catch(IOException e) {
-        	String message = "Message: " + e.getMessage() + System.lineSeparator();
-        	message += "Cause: " + e.getCause();
+            String message = "Message: " + e.getMessage() + System.lineSeparator();
+            message += "Cause: " + e.getCause();
             throw new RuntimeException(message);
         }
     }

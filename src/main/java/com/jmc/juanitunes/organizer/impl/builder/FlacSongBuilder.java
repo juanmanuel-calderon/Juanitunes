@@ -29,29 +29,29 @@ public class FlacSongBuilder implements SongBuilder {
             int duration    = audioHeader.getTrackLength();
             double size     = file.length() / (1024d * 1024d);
             
-            String title    = tag.getFirst(FieldKey.TITLE);
+            String title    = tag.getFirst(FieldKey.TITLE).trim();
             if(title.isEmpty()) title = new File(source).getName().toString();
             
             int cdNumber = parseOrDefault(tag.getFirst(FieldKey.DISC_NO), 0);  
             int trackNumber = parseOrDefault(tag.getFirst(FieldKey.TRACK), 0);     
             int rating = parseOrDefault(tag.getFirst(FieldKey.RATING), -1);
             
-            String genre         = tag.getFirst(FieldKey.GENRE);
-            String year          = tag.getFirst(FieldKey.YEAR);
-            String catalogNumber = tag.getFirst(FieldKey.COMMENT);
+            String genre         = tag.getFirst(FieldKey.GENRE).trim();
+            String year          = tag.getFirst(FieldKey.YEAR).trim();
+            String catalogNumber = tag.getFirst(FieldKey.COMMENT).trim();
             
-            String album         = tag.getFirst(FieldKey.ALBUM);
+            String album         = tag.getFirst(FieldKey.ALBUM).trim();
             if(album.isEmpty()) album = "[[Unknown]]";
             
             List<String> artists = new ArrayList<String>();
             tag.getFields(FieldKey.ARTIST).stream()
-                                          .map(t -> t.toString())
+                                          .map(t -> t.toString().trim())
                                           .forEach(t -> artists.add(t));
             if(artists.isEmpty()) artists.add("[[Unknown]]");
             
             List<String> albumArtists = new ArrayList<String>();
             tag.getFields(FieldKey.ALBUM_ARTIST).stream()
-                                                .map(t -> t.toString())
+                                                .map(t -> t.toString().trim())
                                                 .forEach(t -> albumArtists.add(t));
             if(albumArtists.isEmpty()) albumArtists.add("[[Unknown]]");
             
@@ -82,11 +82,11 @@ public class FlacSongBuilder implements SongBuilder {
     }
     
     private int parseOrDefault(String value, int def) {
-    	try {
-    		return Integer.parseInt(value);
-    	} catch(NumberFormatException e) {
-    		return def;
-    	}
+        try {
+            return Integer.parseInt(value);
+        } catch(NumberFormatException e) {
+            return def;
+        }
     }
     
 }

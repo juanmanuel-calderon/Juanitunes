@@ -26,7 +26,7 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
         this.duration = 0;
         this.size = 0;
         albums.stream().forEach(this::addAlbum);
-    }
+    }   
     
     public SimpleAlbumArtist(AlbumArtist albumArtist, boolean copyAlbums) {
         this(albumArtist.getName(),
@@ -64,7 +64,6 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
     }
     
     public AlbumArtist merge(AlbumArtist other) {
-        
         other.getAlbums().stream()
                          .filter(a -> !albums.contains(a))
                          .forEach(a -> addAlbum(a));
@@ -88,9 +87,9 @@ public class SimpleAlbumArtist implements AlbumArtist, Comparable<AlbumArtist> {
 
         AlbumArtist filteredAlbumArtist = new SimpleAlbumArtist(this, false);
         albums.stream()
-		      .map(a -> a.match(string.toLowerCase()))
-		  	  .filter(Optional::isPresent)
-		  	  .map(Optional::get)
+              .map(a -> a.match(string.toLowerCase()))
+              .filter(Optional::isPresent)
+              .map(Optional::get)
               .forEach(filteredAlbumArtist::addAlbum);
 
         return filteredAlbumArtist.getAlbums().isEmpty() ? Optional.empty()

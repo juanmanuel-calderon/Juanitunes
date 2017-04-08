@@ -14,6 +14,7 @@ public class GeneralSongBuilder implements SongBuilder {
         String ext = Utils.getFileExtension(new File(source)).toLowerCase();
         switch(ext) {
             case "flac"     :     return new FlacSongBuilder().createNew(source);
+            case "mp3"		:     return new Mp3SongBuilder().createNew(source);
             default         :     return Optional.empty(); 
         }
     }

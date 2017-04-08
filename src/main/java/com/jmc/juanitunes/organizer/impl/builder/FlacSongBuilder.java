@@ -11,6 +11,7 @@ import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 
+import com.jmc.juanitunes.organizer.Utils;
 import com.jmc.juanitunes.organizer.api.builder.SongBuilder;
 import com.jmc.juanitunes.organizer.api.library.Song;
 import com.jmc.juanitunes.organizer.impl.library.SimpleSong;
@@ -32,9 +33,9 @@ public class FlacSongBuilder implements SongBuilder {
             String title    = tag.getFirst(FieldKey.TITLE).trim();
             if(title.isEmpty()) title = new File(source).getName().toString();
             
-            int cdNumber = parseOrDefault(tag.getFirst(FieldKey.DISC_NO), 0);  
-            int trackNumber = parseOrDefault(tag.getFirst(FieldKey.TRACK), 0);     
-            int rating = parseOrDefault(tag.getFirst(FieldKey.RATING), -1);
+            int cdNumber = Utils.parseOrDefault(tag.getFirst(FieldKey.DISC_NO), 0);  
+            int trackNumber = Utils.parseOrDefault(tag.getFirst(FieldKey.TRACK), 0);     
+            int rating = Utils.parseOrDefault(tag.getFirst(FieldKey.RATING), -1);
             
             String genre         = tag.getFirst(FieldKey.GENRE).trim();
             String year          = tag.getFirst(FieldKey.YEAR).trim();
@@ -79,14 +80,6 @@ public class FlacSongBuilder implements SongBuilder {
         }
         
         return Optional.empty();
-    }
-    
-    private int parseOrDefault(String value, int def) {
-        try {
-            return Integer.parseInt(value);
-        } catch(NumberFormatException e) {
-            return def;
-        }
     }
     
 }

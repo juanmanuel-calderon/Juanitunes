@@ -29,4 +29,12 @@ public class Utils {
         Comparator<U> initial = (s1, s2) -> 0;
         return Stream.of(criteria).reduce(initial, (c1, c2) -> c1.thenComparing(c2));
     }
+    
+    public static int parseOrDefault(String value, int def) {
+        try {
+            return Integer.parseInt(value);
+        } catch(NumberFormatException e) {
+            return def;
+        }
+    }
 }
